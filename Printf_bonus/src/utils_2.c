@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(char *s)
 {
 	char	*ptr;
 	int		i;

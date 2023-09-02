@@ -41,11 +41,12 @@ int		ft_exec(t_vars *vars, va_list args, const char *str);
 int		ft_is_type(char c);
 int		ft_is_flag(char c);
 int		ft_strlen(char *str);
+int             ft_putstr(char *str);
 int		ft_is_numeric(char c);
 int		ft_atoi(const char *nptr);
 
 char	*ft_itoa(int n);
-char	*ft_strdup(const char *s);
+char	*ft_strdup(char *s);
 
 void	*ft_calloc(size_t nmemb, size_t size);
 
@@ -60,5 +61,6 @@ int		ft_field_width_right(const char *str, t_vars *vars);
 
 int		ft_print_c(char c, t_vars *vars);
 int		ft_print_s(char *str, t_vars *vars);
+int             ft_print_di(int nb, t_vars *vars);
 
 #endif

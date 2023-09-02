@@ -20,8 +20,10 @@ SRC =	src/ft_printf.c \
 	src/ft_exec.c \
 	src/ft_get_flags_info.c \
 	src/ft_print_cs.c \
+	src/ft_print_diu.c \
 	src/utils.c \
-	src/ft_utils_2.c 
+	src/utils_2.c \
+	src/utils_3.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -17,10 +17,10 @@ int	ft_field_width_right(const char *str, t_vars *vars)
 	int	i;
 
 	i = 0;
-	if (vars->field_width)
+	if (vars->field_width && vars->type != 'd' && vars->type != 'i' && vars->type != 'u')
 	{
 		while (str[i] && (ft_is_numeric(str[i])
-				|| str[i] == ' ' || str[i] == '*' || str[i] == '-'))
+				|| str[i] == ' ' || str[i] == '*'))
 			i++;
 		return (i);
 	}
@@ -37,10 +37,10 @@ int	ft_field_width(const char *str, t_vars *vars)
 	int	i;
 
 	i = 0;
-	if (vars->is_minus)
+	if (vars->is_minus && vars->type != 'd' && vars->type != 'i' && vars->type != 'u')
 	{
 		while (str[i] && (ft_is_numeric(str[i])
-				|| str[i] == '-' || str[i] == '*'))
+				|| str[i] == '-' || str[i] == '*' || str[i] == '.'))
 			i++;
 		return (i);
 	}

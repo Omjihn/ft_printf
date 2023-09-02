@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	ft_print_diu(int nb, t_vars *vars)
+int	ft_print_di(int nb, t_vars *vars)
 {
 	int		i;
 	int		len;
@@ -21,18 +21,43 @@ int	ft_print_diu(int nb, t_vars *vars)
 	str = ft_itoa(nb);
 	len = ft_strlen(str);
 	i = 0;
-	if (vars->is_space && nb > 0 && !vars->is_plus)
+	if (vars->field_width == ' ')
 	{
-		vars->ret_val += write(1, " ", 1);
-		i++;
+		i = len;
+		while (i < vars->nb_field_width)
+		{
+			i += write(1, " ", 1);
+			vars->ret_val++;
+		}
 	}
-	else if (nb >= 0 && vars->is_plus)
+	if (vars->is_plus && nb >= 0)
 	{
 		vars->ret_val += write(1, "+", 1);
 		i++;
 	}
-	else if ()
-	
+	else if (vars->is_space && nb >= 0 && !vars->field_width)
+	{
+		vars->ret_val += write(1, " ", 1);
+		i++;
+	}
+	if (vars->field_width == '0')
+	{
+		while (i + len < vars->nb_field_width)
+		{
+			i += write(1, "0", 1);
+			vars->ret_val++;
+		}
+	}
+	vars->ret_val += ft_strlen(str);
+	i += ft_putstr(str);
+	if (vars->is_minus)
+	{
+		while (i < vars->nb_field_width)
+		{
+			i += write(1, " ", 1);
+			vars->ret_val++;
+		}
+	}
 	free(str);
 	return (i);
 }
