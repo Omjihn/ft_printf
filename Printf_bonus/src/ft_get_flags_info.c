@@ -20,7 +20,7 @@ int	ft_field_width_right(const char *str, t_vars *vars)
 	if (vars->field_width)
 	{
 		while (str[i] && (ft_is_numeric(str[i])
-				|| str[i] == ' ' || str[i] == '*'))
+				|| str[i] == ' ' || str[i] == '*' || str[i] == '-'))
 			i++;
 		return (i);
 	}

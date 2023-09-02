@@ -44,6 +44,9 @@ int		ft_strlen(char *str);
 int		ft_is_numeric(char c);
 int		ft_atoi(const char *nptr);
 
+char	*ft_itoa(int n);
+char	*ft_strdup(const char *s);
+
 void	*ft_calloc(size_t nmemb, size_t size);
 
 /*		FLAGS		*/

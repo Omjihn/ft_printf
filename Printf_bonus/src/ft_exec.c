@@ -83,11 +83,11 @@ int	ft_wich_type(va_list args, t_vars *vars)
 		return (ft_print_c(va_arg(args, int), vars));
 	else if (vars->type == 's')
 		return (ft_print_s(va_arg(args, char *), vars));
-/*	else if (vars->type == 'p')
-		
+//	else if (vars->type == 'p')
+//		return (ft_print_p(va_arg(args, unsigned long), vars));		
 	else if (vars->type == 'd' || vars->type == 'i')
-		
-	else if (vars->type == 'u')
+		ft_print_di(va_arg(args, int), vars);
+/*	else if (vars->type == 'u')
 		
 	else if (vars->type == 'x')
 		

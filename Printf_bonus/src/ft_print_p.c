@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   ft_print_p.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbricot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/29 11:16:10 by gbricot           #+#    #+#             */
-/*   Updated: 2023/08/30 09:13:27 by gbricot          ###   ########.fr       */
+/*   Created: 2023/09/02 15:45:04 by gbricot           #+#    #+#             */
+/*   Updated: 2023/09/02 15:53:42 by gbricot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "ft_printf.h"
 
-int	main(void)
+int	ft_print_p(unsigned long adr, t_vars *vars)
 {
-	printf("%d\n", printf("%+d\n", 0));
-	//printf("%d\n", printf("% 1d\n", 42));
-}
+	
+	
