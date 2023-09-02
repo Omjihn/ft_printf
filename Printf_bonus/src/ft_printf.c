@@ -25,7 +25,7 @@ int	ft_printf(const char *str, ...)
 	while (str[i])
 	{
 		if (str[i] == '%')
-			i += ft_exec(vars, args, str + i + 1);
+			i += ft_exec(vars, args, str + i + 1) + 1;
 		else
 			vars->ret_val += write(1, str + i, 1);
 		i++;
