@@ -31,7 +31,7 @@ void  ft_free(int fd[2][2], char *res_1, char *res_2)
         }
         close(fd[1][0]);
 	close(fd[0][0]);
-}      
+}
 
 int	main(int ac, char **av)
 {
@@ -51,6 +51,12 @@ int	main(int ac, char **av)
 	int	arg_7 = 53634;
 	int	arg_8 = INT_MAX;
 	
+	char *prompt_xX = "%#x | %#x | %6X | %#X |\n";
+	unsigned int arg_13 = UINT_MAX;
+	unsigned int arg_14 = INT_MAX;
+	unsigned int arg_15 = 0;
+	unsigned int arg_16 = 42;
+	
 //	char	*prompt_per = "%% | %0954-3]4% | %       % | %54989=084% |\n";
 	
 	
@@ -68,8 +74,9 @@ int	main(int ac, char **av)
 			close(fd[0][1]);
 			int ret_1 = ft_printf(prompt_cs, arg_1, arg_2, arg_3, arg_4, arg_9, arg_10, arg_11, arg_12);
 			int ret_2 = ft_printf(prompt_di, arg_5, arg_6, arg_7, arg_8);
+			int ret_7 = ft_printf(prompt_xX, arg_13, arg_14, arg_15, arg_16);
 //			int ret_5 = ft_printf(prompt_per);
-			printf("%d%d\n", ret_1, ret_2);
+			printf("%d%d%d\n", ret_1, ret_2, ret_7);
 			exit(0);
 		}
 		int pid_2 = fork();
@@ -80,8 +87,9 @@ int	main(int ac, char **av)
 			close(fd[1][1]);
 			int ret_3 = printf(prompt_cs, arg_1, arg_2, arg_3, arg_4, arg_9, arg_10, arg_11, arg_12);
 			int ret_4 = printf(prompt_di, arg_5, arg_6, arg_7, arg_8);
+			int ret_8 = printf(prompt_xX, arg_13, arg_14, arg_15, arg_16);
 //			int ret_6 = printf(prompt_per);
-			printf("%d%d\n", ret_3, ret_4);
+			printf("%d%d%d\n", ret_3, ret_4, ret_8);
 			exit(0);
 		}
 		waitpid(pid_1, NULL, 0);
@@ -140,7 +148,12 @@ int	main(int ac, char **av)
 		printf("%d\n", ft_printf(prompt_per));
 		printf("---------------------------------------------------\n\nprintf :\n");
 		printf("%d\n", printf(prompt_per));
-*/		
-		
+*/		printf("Test :4\n");
+                printf("printf %sArgs : %x | %x | %X | %X \n", prompt_xX, arg_13, arg_14, arg_15, arg_16);
+                printf("---------------------------------------------------\nft_printf :\n");
+                printf("%d\n", ft_printf(prompt_xX, arg_13, arg_14, arg_15, arg_16));
+                printf("---------------------------------------------------\n\nprintf :\n");
+                printf("%d\n", printf(prompt_xX, arg_13, arg_14, arg_15, arg_16));
+                printf("---------------------------------------------------\n\n");
 	}
 }

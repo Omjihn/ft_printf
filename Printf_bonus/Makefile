@@ -21,6 +21,7 @@ SRC =	src/ft_printf.c \
 	src/ft_get_flags_info.c \
 	src/ft_print_cs.c \
 	src/ft_print_diu.c \
+	src/ft_print_xX.c \
 	src/utils.c \
 	src/utils_2.c \
 	src/utils_3.c

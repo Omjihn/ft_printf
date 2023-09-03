@@ -62,7 +62,8 @@ int		ft_field_width_right(const char *str, t_vars *vars);
 /*		PRINT		*/
 
 int		ft_print_c(char c, t_vars *vars);
-int		ft_print_s(char *str, t_vars *vars);
 int             ft_print_di(int nb, t_vars *vars);
+int		ft_print_s(char *str, t_vars *vars);
+int             ft_print_xX(unsigned int, t_vars *vars);
 
 #endif

@@ -14,6 +14,6 @@
 
 int	main(void)
 {
-	printf("%d\n", printf("%s%-3412=", "salut"));
+	printf("%d\n", printf("%#24.20x\n", 42));
 	//printf("%d\n", printf("% 1d\n", 42));
 }

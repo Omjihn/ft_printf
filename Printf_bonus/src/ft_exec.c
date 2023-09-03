@@ -115,15 +115,12 @@ int	ft_wich_type(va_list args, t_vars *vars, const char *str)
 //		return (ft_print_p(va_arg(args, unsigned long), vars));		
 	else if (vars->type == 'd' || vars->type == 'i')
 		return(ft_print_di(va_arg(args, int), vars));
-/*	else if (vars->type == 'u')
+	//else if (vars->type == 'u')
 		
-	else if (vars->type == 'x')
-		
-	else if (vars->type == 'X')
-*/		
+	else if (vars->type == 'x' || vars->type == 'X')
+		return (ft_print_xX(va_arg(args, unsigned int), vars));		
 	else if (vars->type == '%')
 		return (ft_print_percent(vars, str));
-//	else
 	return (0);
 }
 
