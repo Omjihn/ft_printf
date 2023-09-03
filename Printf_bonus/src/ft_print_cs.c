@@ -23,7 +23,7 @@ int	ft_print_c(char c, t_vars *vars)
 	write(1, &c, 1);
 	if (vars->is_minus)
 	{
-		while (i < vars->nb_field_width)
+		while (i < vars->nb_field_width_minus)
 			i += write(1, " ", 1);
 	}
 	return (i);
@@ -65,7 +65,7 @@ int	ft_print_s(char *str, t_vars *vars)
 	}
 	if (vars->is_minus)
 	{
-		while (i < vars->nb_field_width)
+		while (i < vars->nb_field_width_minus)
 		{
 			i += write(1, " ", 1);
 			ret_val++;

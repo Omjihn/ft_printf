@@ -22,7 +22,7 @@ int	ft_printf(const char *str, ...)
 	vars = ft_calloc(sizeof(t_vars), 1);
 	va_start(args, str);
 	i = 0;
-	while (str[i])
+	while (str[i] && !vars->is_error)
 	{
 		if (str[i] == '%')
 			i += ft_exec(vars, args, str + i + 1) + 1;

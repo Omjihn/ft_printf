@@ -14,6 +14,6 @@
 
 int	main(void)
 {
-	printf("%d\n", printf("%+12d\n", 0));
+	printf("%d\n", printf("%s%-3412=", "salut"));
 	//printf("%d\n", printf("% 1d\n", 42));
 }

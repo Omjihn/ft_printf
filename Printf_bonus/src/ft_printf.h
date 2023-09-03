@@ -22,6 +22,7 @@ typedef struct s_vars
 {
 	char	type;
 	char	is_error;
+	char	is_wrong_flag;
 	char	is_ox;
 	char	is_plus;
 	char	is_space;
@@ -29,6 +30,7 @@ typedef struct s_vars
 	char	is_minus;
 	char	field_width;
 	int		nb_field_width;
+	int		nb_field_width_minus;
 	int		nb_point;
 	int		ret_val;
 }			t_vars;

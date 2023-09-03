@@ -26,7 +26,7 @@ int	ft_field_width_right(const char *str, t_vars *vars)
 	}
 	i++;
 	vars->is_minus = '-';
-	vars->nb_field_width = ft_atoi(str + i);
+	vars->nb_field_width_minus = ft_atoi(str + i);
 	while (str[i] && ft_is_numeric(str[i]))
 		i++;
 	return (i);
@@ -44,15 +44,27 @@ int	ft_field_width(const char *str, t_vars *vars)
 			i++;
 		return (i);
 	}
-	if (str[i] == '0' || str[i] == '.')
+	if (str[i] == '0')
+	{
 		vars->field_width = '0';
+		vars->nb_field_width = ft_atoi(str + i + 1);
+	}
+	else if (str[i] == '.')
+	{	
+		if (vars->field_width == '0' && ft_atoi(str + i + 1) < vars->nb_field_width)
+			vars->field_width = ' ';
+		else if (vars->field_width == '0' && vars->type != 'c' && vars->type != 's')
+			vars->field_width = 0;
+		vars->is_point = '.';
+		vars->nb_point = ft_atoi(str + i + 1);
+	}	
 	else if (ft_is_numeric(str[i]))
 	{
 		vars->field_width = ' ';
+		vars->nb_field_width = ft_atoi(str + i);
 		i--;
 	}
 	i++;
-	vars->nb_field_width = ft_atoi(str + i);
 	while (str[i] && ft_is_numeric(str[i]))
 		i++;
 	return (i);
@@ -62,7 +74,7 @@ int	ft_str_limit(const char *str, t_vars *vars)
 {
 	int	i;
 
-	vars->is_point = 1;
+	vars->is_point = '.';
 	vars->nb_point = ft_atoi(str + 1);
 	i = 1;
 	while (str[i] && ft_is_numeric(str[i]))
