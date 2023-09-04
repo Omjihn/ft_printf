@@ -6,7 +6,7 @@
 /*   By: gbricot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 10:52:48 by gbricot           #+#    #+#             */
-/*   Updated: 2023/09/02 13:57:20 by gbricot          ###   ########.fr       */
+/*   Updated: 2023/09/04 09:45:26 by gbricot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ int	ft_wich_type(va_list args, t_vars *vars, const char *str)
 		return (ft_print_c(va_arg(args, int), vars));
 	else if (vars->type == 's')
 		return (ft_print_s(va_arg(args, char *), vars));
-//	else if (vars->type == 'p')
-//		return (ft_print_p(va_arg(args, unsigned long), vars));		
+	else if (vars->type == 'p')
+		return (ft_print_p(va_arg(args, unsigned long int), vars));		
 	else if (vars->type == 'd' || vars->type == 'i')
 		return(ft_print_di(va_arg(args, int), vars));
 	//else if (vars->type == 'u')
@@ -136,16 +136,19 @@ int	ft_exec(t_vars *vars, va_list args, const char *str)
 	if (!type)
 		return (1);
 	i = ft_exec_before(type, str, vars);
-	if (vars->is_wrong_flag)
+	if (vars->is_wrong_flag == 1)
 	{
 		vars->ret_val += write(1, "%", 1);
 		while (str[i] != type)
 			i += write(1, &str[i], 1);
 		i += write(1, &str[i], 1);
-		va_arg(args, int);
 		ft_reset_vars(vars);
 		vars->ret_val += i;
 		return (i - 1);
+	}
+	else if (vars->is_wrong_flag == 2)
+	{
+		
 	}
 	//printf("is_error %d\nis_ox %d\nis_plus %d\nis_space %d\nis_point %d\nfield_width %d\nnb_field_width %d\nnb_point %d\nret_val %d\nis_minus %d\nis_point %d\n", vars->is_error, vars->is_ox, vars->is_plus, vars->is_space, vars->is_point, vars->field_width, vars->nb_field_width, vars->nb_point, vars->ret_val, vars->is_minus, vars->is_point);
 	vars->ret_val += ft_wich_type(args, vars, str);

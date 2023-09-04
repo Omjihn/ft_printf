@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_print_xX.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gbricot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 09:45:06 by gbricot           #+#    #+#             */
+/*   Updated: 2023/09/04 14:59:10 by gbricot          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
@@ -52,16 +63,26 @@ int	ft_print_xX(unsigned int nb, t_vars *vars)
 	int		len;
 	int		i;
 	char	*str;
+	char sign;
 
 	str = ft_itoa_base(nb, vars->type);
 	len = ft_strlen(str);
 	ret_val = 0;
-	i = 0;
+	sign = 0;
 	if (vars->is_ox && nb)
-		i += 2;
-	if (vars->field_width == ' ')
+		sign = 2;
+	i = 0;
+	if (vars->field_width == ' ' && len < vars->nb_point)
 	{
-		while (i + len < vars->nb_field_width)
+		while (i + vars->nb_point < vars->nb_field_width - sign)
+		{
+			i += write(1, " ", 1);
+			ret_val++;
+		}
+	}
+	else if (vars->field_width == ' ')
+	{
+		while (i + len < vars->nb_field_width - sign)
 		{
 			i += write(1, " ", 1);
 			ret_val++;
@@ -70,13 +91,37 @@ int	ft_print_xX(unsigned int nb, t_vars *vars)
 	if (vars->is_ox && nb)
 	{
 		if (vars->type == 'X')
-			write(1, "0X", 2);
+			ret_val += write(1, "0X", 2);
 		else
-			write(1, "0x", 2);
-		ret_val += 2;
+			ret_val += write(1, "0x", 2);
+	}
+	i = 0;
+	if (vars->field_width == '0')
+	{
+		while (i + len < vars->nb_field_width)
+		{
+			i += write(1, "0", 1);
+			ret_val++;
+		}
+	}
+	else if (vars->is_point == '.')
+	{
+		while (i + len < vars->nb_point)
+		{
+			i += write(1, "0", 1);
+			ret_val++;
+		}
 	}
 	ret_val += len;
-	i += ft_putstr(str);	
+	i += ft_putstr(str);
+	if (vars->is_minus)
+	{
+		while (i < vars->nb_field_width_minus - sign)
+		{
+			i += write(1, " ", 1);
+			ret_val++;
+		}
+	}
 	free(str);
 	return (ret_val);
 }

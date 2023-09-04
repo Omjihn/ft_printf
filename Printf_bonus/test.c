@@ -14,6 +14,11 @@
 
 int	main(void)
 {
-	printf("%d\n", printf("%#24.20x\n", 42));
+	printf("%d\n", printf("%i\n", 12345));
+	printf("%d\n", printf("%10i\n", 12345));
+	printf("%d\n", printf("%10.10i\n", 12345));
+	printf("%d\n", printf("%5.10i\n", 12345));
+	printf("%d\n", printf("%10.5i\n", 12345));
+	printf("%d\n", printf("%10.7i\n", 12345));
 	//printf("%d\n", printf("% 1d\n", 42));
 }

@@ -6,7 +6,7 @@
 /*   By: gbricot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:16:43 by gbricot           #+#    #+#             */
-/*   Updated: 2023/08/30 09:35:22 by gbricot          ###   ########.fr       */
+/*   Updated: 2023/09/04 15:16:14 by gbricot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ int		ft_print_c(char c, t_vars *vars);
 int             ft_print_di(int nb, t_vars *vars);
 int		ft_print_s(char *str, t_vars *vars);
 int             ft_print_xX(unsigned int, t_vars *vars);
+int		ft_print_p(unsigned long int, t_vars *vars);
 
 #endif
