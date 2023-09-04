@@ -44,7 +44,7 @@ static void	ft_reset_vars(t_vars *vars)
 	vars->nb_field_width_minus = 0;
 }
 
-int	ft_exec_before(char type, const char *str, t_vars *vars)
+int	ft_exec_before(char type, const char *str, t_vars *vars, va_list args)
 {
 	int	i;
 	
@@ -67,9 +67,9 @@ int	ft_exec_before(char type, const char *str, t_vars *vars)
 			i++;
 		}
 		else if (ft_is_numeric(str[i]) || (type != 's' && str[i] == '.'))
-			i += ft_field_width(str + i, vars);
+			i += ft_field_width(str + i, vars, args);
 		else if (type == 's' && str[i] == '.')
-			i += ft_str_limit(str + i, vars);
+			i += ft_str_limit(str + i, vars, args);
 		else if (str[i] == '-')
 		{
 			if ((vars->field_width && vars->type != 'c') || vars->is_point)
@@ -77,7 +77,7 @@ int	ft_exec_before(char type, const char *str, t_vars *vars)
 				vars->is_wrong_flag = 1;
 				return (0);
 			}
-			i += ft_field_width_right(str + i, vars);
+			i += ft_field_width_right(str + i, vars, args);
 		}
 		else
 			i++;
@@ -135,7 +135,7 @@ int	ft_exec(t_vars *vars, va_list args, const char *str)
 	//printf("Type :%d\n", type);
 	if (!type)
 		return (1);
-	i = ft_exec_before(type, str, vars);
+	i = ft_exec_before(type, str, vars, args);
 	if (vars->is_wrong_flag == 1)
 	{
 		vars->ret_val += write(1, "%", 1);

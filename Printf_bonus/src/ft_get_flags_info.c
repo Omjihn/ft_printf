@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	ft_field_width_right(const char *str, t_vars *vars)
+int	ft_field_width_right(const char *str, t_vars *vars, va_list args)
 {
 	int	i;
 
@@ -28,14 +28,16 @@ int	ft_field_width_right(const char *str, t_vars *vars)
 	vars->is_minus = '-';
 	if (ft_is_numeric(str[i]))
 		vars->nb_field_width_minus = ft_atoi(str + i);
+	else if (str[i] == '*')
+		vars->nb_field_width_minus = va_arg(args, int);
 	else
 		vars->is_wrong_flag = 2;
-	while (str[i] && ft_is_numeric(str[i]))
+	while (str[i] && (ft_is_numeric(str[i]) || str[i] == '*'))
 		i++;
 	return (i);
 }
 
-int	ft_field_width(const char *str, t_vars *vars)
+int	ft_field_width(const char *str, t_vars *vars, va_list args)
 {
 	int	i;
 
@@ -54,6 +56,8 @@ int	ft_field_width(const char *str, t_vars *vars)
 		vars->field_width = '0';
 		if (ft_is_numeric(str[i + 1]))
 			vars->nb_field_width = ft_atoi(str + i + 1);
+		else if (str[i + 1] == '*')
+			vars->nb_field_width = va_arg(args, int);
 		else
 			vars->is_wrong_flag = 2;
 	}
@@ -66,6 +70,8 @@ int	ft_field_width(const char *str, t_vars *vars)
 		vars->is_point = '.';
 		if (ft_is_numeric(str[i + 1]))
 			vars->nb_point = ft_atoi(str + i + 1);
+		else if (str[i + 1] == '*')
+			vars->nb_point = va_arg(args, int);
 		else
 			vars->is_wrong_flag = 2;
 	}	
@@ -74,27 +80,31 @@ int	ft_field_width(const char *str, t_vars *vars)
 		vars->field_width = ' ';
 		if (ft_is_numeric(str[i]))
 			vars->nb_field_width = ft_atoi(str + i);
+		else if (str[i] == '*')
+			vars->nb_field_width = va_arg(args, int);
 		else
 			vars->is_wrong_flag = 2;
 		i--;
 	}
 	i++;
-	while (str[i] && ft_is_numeric(str[i]))
+	while (str[i] && (ft_is_numeric(str[i]) || str[i] == '*'))
 		i++;
 	return (i);
 }
 
-int	ft_str_limit(const char *str, t_vars *vars)
+int	ft_str_limit(const char *str, t_vars *vars, va_list args)
 {
 	int	i;
 
 	vars->is_point = '.';
 	if (ft_is_numeric(str[1]))
 		vars->nb_point = ft_atoi(str + 1);
+	else if (str[1] == '*')
+		vars->nb_point = va_arg(args, int);
 	else
 		vars->is_wrong_flag = 2;
 	i = 1;
-	while (str[i] && ft_is_numeric(str[i]))
+	while (str[i] && (ft_is_numeric(str[i]) || str[i] == '*'))
 		i++;
 	return (i);
 }

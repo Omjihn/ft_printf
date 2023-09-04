@@ -30,7 +30,7 @@ int	ft_is_numeric(char c)
 int	ft_is_flag(char c)
 {
 	if (c == '#' || c == '0' || c == '-' || c == ' ' || c == '+' 
-			|| c == '.' || ft_is_numeric(c))
+			|| c == '.' || ft_is_numeric(c) || c == '*')
 		return (1);
 	return (0);
 }

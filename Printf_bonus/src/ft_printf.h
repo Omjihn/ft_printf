@@ -29,6 +29,7 @@ typedef struct s_vars
 	char	is_point;
 	char	is_minus;
 	char	field_width;
+	va_list	*args;
 	int		nb_field_width;
 	int		nb_field_width_minus;
 	int		nb_point;
@@ -54,9 +55,9 @@ void	*ft_calloc(size_t nmemb, size_t size);
 
 /*		FLAGS		*/
 
-int		ft_str_limit(const char *str, t_vars *vars);
-int		ft_field_width(const char *str, t_vars *vars);
-int		ft_field_width_right(const char *str, t_vars *vars);
+int		ft_str_limit(const char *str, t_vars *vars, va_list args);
+int		ft_field_width(const char *str, t_vars *vars, va_list args);
+int		ft_field_width_right(const char *str, t_vars *vars, va_list args);
 
 
 /*		PRINT		*/
