@@ -6,7 +6,7 @@
 #    By: gbricot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/28 13:11:49 by gbricot           #+#    #+#              #
-#    Updated: 2023/09/05 14:30:07 by gbricot          ###   ########.fr        #
+#    Updated: 2023/09/05 15:19:44 by gbricot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ SRC =	src/ft_printf.c \
 	src/ft_print_p.c \
 	src/utils.c \
 	src/utils_2.c \
-	src/utils_3.c
+	src/utils_3.c \
+	src/exec_utils.c
 
 OBJ = $(SRC:.c=.o)
 

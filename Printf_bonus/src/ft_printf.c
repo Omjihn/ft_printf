@@ -12,15 +12,10 @@
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *str, ...)
+static void	ft_printf_2(const char *str, t_vars *vars, va_list args)
 {
-	int		i;
-	int		ret_val;
-	va_list	args;
-	t_vars	*vars;
+	int	i;
 
-	vars = ft_calloc(sizeof(t_vars), 1);
-	va_start(args, str);
 	i = 0;
 	while (str[i] && !vars->is_error)
 	{
@@ -30,6 +25,19 @@ int	ft_printf(const char *str, ...)
 			vars->ret_val += write(1, str + i, 1);
 		i++;
 	}
+}
+
+int	ft_printf(const char *str, ...)
+{
+	int		ret_val;
+	va_list	args;
+	t_vars	*vars;
+
+	if (!str)
+		return (-1);
+	vars = ft_calloc(sizeof(t_vars), 1);
+	va_start(args, str);
+	ft_printf_2(str, vars, args);
 	va_end(args);
 	ret_val = vars->ret_val;
 	if (vars->is_error)

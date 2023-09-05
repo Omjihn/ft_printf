@@ -12,65 +12,36 @@
 
 #include "ft_printf.h"
 
-static char	ft_get_type(const char *str)
+int	ft_exec_before_2(char type, const char *str, int i, t_vars *vars)
 {
-	int	i;
-
-	i = 0;
-	while (str[i] && (ft_is_flag(str[i]) || ft_is_type(str[i])))
+	if (str[i] == '+' && i == 0 && (type == 'd' || type == 'i'))
 	{
-		if (ft_is_type(str[i]))
-			return (str[i]);
+		vars->is_plus = 1;
 		i++;
 	}
-	if (!str[i])
-		return (0);
-	else
-		return ('%');
-}
-
-static void	ft_reset_vars(t_vars *vars)
-{
-	vars->i = 0;
-	vars->len = 0;
-	vars->type = 0;
-	vars->sign = 0;
-	vars->is_ox = 0;
-	vars->str = NULL;
-	vars->is_plus = 0;
-	vars->is_space = 0;
-	vars->is_point = 0;
-	vars->nb_point = 0;
-	vars->is_minus = 0;
-	vars->field_width = 0;
-	vars->is_wrong_flag = 0;
-	vars->nb_field_width = 0;
-	vars->nb_field_width_minus = 0;
+	else if (str[i] == ' ' && (type == 'd' || type == 'i'))
+	{
+		vars->is_space = 1;
+		i++;
+	}
+	else if (str[i] == '#' && (type == 'x' || type == 'X'))
+	{
+		vars->is_ox = 1;
+		i++;
+	}
+	return (i);
 }
 
 int	ft_exec_before(char type, const char *str, t_vars *vars, va_list args)
 {
 	int	i;
-	
+
 	i = 0;
 	while (str[i] && str[i] != type)
 	{
-		if (str[i] == '+' && i == 0 && (type == 'd' || type == 'i'))
-		{
-			vars->is_plus = 1;
-			i++;
-		}
-		else if (str[i] == ' ' && (type == 'd' || type == 'i'))
-		{
-			vars->is_space = 1;
-			i++;
-		}
-		else if (str[i] == '#' && (type == 'x' || type == 'X'))
-		{
-			vars->is_ox = 1;
-			i++;
-		}
-		else if (ft_is_numeric(str[i]) || str[i] == '*' || (type != 's' && str[i] == '.'))
+		i = ft_exec_before_2(type, str, i, vars);
+		if (ft_is_numeric(str[i]) || str[i] == '*'
+			|| (type != 's' && str[i] == '.'))
 			i += ft_field_width(str + i, vars, args);
 		else if (type == 's' && str[i] == '.')
 			i += ft_str_limit(str + i, vars, args);
@@ -92,9 +63,10 @@ int	ft_exec_before(char type, const char *str, t_vars *vars, va_list args)
 int	ft_print_percent(t_vars *vars, const char *str)
 {
 	int	i;
-	
+
 	i = 0;
-	while (str[i] && str[i] != '%' && (ft_is_numeric(str[i]) || ft_is_type(str[i]) || ft_is_flag(str[i])))
+	while (str[i] && str[i] != '%' && (ft_is_numeric(str[i])
+			|| ft_is_type(str[i]) || ft_is_flag(str[i])))
 		i++;
 	if (!str[i])
 	{
@@ -116,13 +88,13 @@ int	ft_wich_type(va_list args, t_vars *vars, const char *str)
 	else if (vars->type == 's')
 		return (ft_print_s(va_arg(args, char *), vars));
 	else if (vars->type == 'p')
-		return (ft_print_p(va_arg(args, unsigned long int), vars));		
+		return (ft_print_p(va_arg(args, unsigned long int), vars));
 	else if (vars->type == 'd' || vars->type == 'i')
-		return(ft_print_di(va_arg(args, int), vars));
+		return (ft_print_di(va_arg(args, int), vars));
 	else if (vars->type == 'u')
 		return (ft_print_u(va_arg(args, unsigned int), vars));
 	else if (vars->type == 'x' || vars->type == 'X')
-		return (ft_print_x(va_arg(args, unsigned int), vars));		
+		return (ft_print_x(va_arg(args, unsigned int), vars));
 	else if (vars->type == '%')
 		return (ft_print_percent(vars, str));
 	return (0);
@@ -139,8 +111,8 @@ int	ft_exec(t_vars *vars, va_list args, const char *str)
 	if (!type)
 		return (1);
 	i = ft_exec_before(type, str, vars, args);
-	if(vars->is_error)
-		return(0);
+	if (vars->is_error)
+		return (0);
 	if (vars->is_wrong_flag == 1)
 	{
 		vars->ret_val += write(1, "%", 1);

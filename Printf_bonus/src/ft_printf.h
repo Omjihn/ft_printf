@@ -52,8 +52,13 @@ int		ft_putstr(char *str);
 int		ft_is_numeric(char c);
 int		ft_atoi(const char *nptr, t_vars *vars);
 
+char	ft_get_type(const char *str);
+
 char	*ft_itoa(int n);
 char	*ft_strdup(char *s);
+char	*ft_itoa_base_long(unsigned long int nb, char x);
+
+void	ft_reset_vars(t_vars *vars);
 
 void	*ft_calloc(size_t nmemb, size_t size);
 
