@@ -35,7 +35,7 @@ void  ft_free(int fd[2][2], char *res_1, char *res_2)
 
 int	main(int ac, char **av)
 {
-        char *prompt_cs = "%12.3c | % 12s | %-10.2s | %-12.20s | %02.21c | %s | %2.3s | % -00002s |\n";
+        char *prompt_cs = "%15c | % 12s | %-10.2s | %-12.2147483648s | %02.21c | %s | %2.3s | % -00002s |\n";
 	char	arg_1 = 's';
 	char	*arg_2 = "Oulala";
 	char	*arg_3 = NULL;
@@ -45,23 +45,39 @@ int	main(int ac, char **av)
 	char	*arg_11 = "kruhn [-0932 2";
 	char	*arg_12 = ".......       ........";
 
-	char *prompt_di = "%+015.7d | %+010.4i | %+-20.15d | % -8.4i |\n";
+	char *prompt_diu = "%+015.7d | %+010.4i | %+-20.15d | % -8.4i | %+u | %032.24u |\n";
 	int	arg_5 = INT_MIN;
 	int	arg_6 = 0;
 	int	arg_7 = INT_MAX;
 	int	arg_8 = 48;
+	unsigned int	arg_29 = 654345;
+	unsigned int	arg_30 = 0;
 	
-	char *prompt_xX = "%08.9x | %-24.32x | %#-15.7X | %#020.15X |\n";
+	char *prompt_xX = "%9x | %#012x | %#-15.7X | %#020.15X |\n";
 	unsigned int arg_13 = UINT_MAX;
-	unsigned int arg_14 = INT_MAX;
+	unsigned int arg_14 = 656325;
 	unsigned int arg_15 = 0;
 	unsigned int arg_16 = 42;
 	
-	char *prompt_p = "%-12p | %-40.32p | %p | %20.15p |\n";
+	char *prompt_p = "%-12p | %-40.32p | %020p | %20.15p |\n";
 	void	*arg_17 = NULL;
 	void	*arg_18 = malloc(0);
 	void	*arg_19 = malloc(0);
 	void	*arg_20 = malloc(0);
+	
+	char *prompt_args = "%*d | %.*s | %0*x | %-*c |\n";
+	int	arg_21 = 5;
+	int	arg_22 = 42;
+	int	arg_23 = 9;
+	char	*arg_24 = "Ca marche pas";
+	int	arg_25 = 12;
+	unsigned int arg_26 = 656325;
+	int arg_27 = 5;
+	char arg_28 = '>';
+	
+	char *prompt_of = "% 2147483648d | %c\n";
+	char *prompt_of_2 = "% -2147483649d | %c\n";
+	
 	
 	
 //	char	*prompt_per = "%% | %0954-3]4% | %       % | %54989=084% |\n";
@@ -80,11 +96,14 @@ int	main(int ac, char **av)
 			close(fd[0][0]);
 			close(fd[0][1]);
 			int ret_1 = ft_printf(prompt_cs, arg_1, arg_2, arg_3, arg_4, arg_9, arg_10, arg_11, arg_12);
-			int ret_2 = ft_printf(prompt_di, arg_5, arg_6, arg_7, arg_8);
+			int ret_2 = ft_printf(prompt_diu, arg_5, arg_6, arg_7, arg_8, arg_29, arg_30);
 			int ret_7 = ft_printf(prompt_xX, arg_13, arg_14, arg_15, arg_16);
 			int ret_9 = ft_printf(prompt_p, arg_17, arg_18, arg_19, arg_20);
+			int ret_11 = ft_printf(prompt_args, arg_21, arg_22, arg_23, arg_24, arg_25, arg_26, arg_27, arg_28);
+			int ret_13 = ft_printf(prompt_of, arg_5);
+			int ret_14 = ft_printf(prompt_of_2, arg_5);
 //			int ret_5 = ft_printf(prompt_per);
-			printf("%d%d%d%d\n", ret_1, ret_2, ret_7, ret_9);
+			printf("%d%d%d%d%d%d%d\n", ret_1, ret_2, ret_7, ret_9, ret_11, ret_13, ret_14);
 			exit(0);
 		}
 		int pid_2 = fork();
@@ -94,11 +113,14 @@ int	main(int ac, char **av)
 			close(fd[1][0]);
 			close(fd[1][1]);
 			int ret_3 = printf(prompt_cs, arg_1, arg_2, arg_3, arg_4, arg_9, arg_10, arg_11, arg_12);
-			int ret_4 = printf(prompt_di, arg_5, arg_6, arg_7, arg_8);
+			int ret_4 = printf(prompt_diu, arg_5, arg_6, arg_7, arg_8, arg_29, arg_30);
 			int ret_8 = printf(prompt_xX, arg_13, arg_14, arg_15, arg_16);
 			int ret_10 = printf(prompt_p, arg_17, arg_18, arg_19, arg_20);
+			int ret_12 = printf(prompt_args, arg_21, arg_22, arg_23, arg_24, arg_25, arg_26, arg_27, arg_28);
+			int ret_15 = printf(prompt_of, arg_5);
+			int ret_16 = printf(prompt_of_2, arg_5);
 //			int ret_6 = printf(prompt_per);
-			printf("%d%d%d%d\n", ret_3, ret_4, ret_8, ret_10);
+			printf("%d%d%d%d%d%d%d\n", ret_3, ret_4, ret_8, ret_10, ret_12, ret_15, ret_16);
 			exit(0);
 		}
 		waitpid(pid_1, NULL, 0);
@@ -148,11 +170,11 @@ int	main(int ac, char **av)
 		printf("%d\n", printf(prompt_cs, arg_1, arg_2, arg_3, arg_4, arg_9, arg_10, arg_11, arg_12));
 		printf("---------------------------------------------------\n\n");
 		printf("Test 2:\n");
-		printf("printf %sArgs : %d | %i | %d | %i \n", prompt_di, arg_5, arg_6, arg_7, arg_8);
+		printf("printf %sArgs : %d | %i | %d | %i | %u | %u |\n", prompt_diu, arg_5, arg_6, arg_7, arg_8, arg_29, arg_30);
 		printf("---------------------------------------------------\nft_printf :\n");
-		printf("%d\n", ft_printf(prompt_di, arg_5, arg_6, arg_7, arg_8));
+		printf("%d\n", ft_printf(prompt_diu, arg_5, arg_6, arg_7, arg_8, arg_29, arg_30));
 		printf("---------------------------------------------------\n\nprintf :\n");
-		printf("%d\n", printf(prompt_di, arg_5, arg_6, arg_7, arg_8));
+		printf("%d\n", printf(prompt_diu, arg_5, arg_6, arg_7, arg_8, arg_29, arg_30));
 		printf("---------------------------------------------------\n");
 /*		printf("Test 3:\n");
 		printf("printf %s\n", prompt_per);
@@ -174,6 +196,22 @@ int	main(int ac, char **av)
                 printf("---------------------------------------------------\n\nprintf :\n");
                 printf("%d\n", printf(prompt_p, arg_17, arg_18, arg_19, arg_20));
                 printf("---------------------------------------------------\n\n");
+                printf("Test args with : *\n");
+                printf("printf %sArgs : %i | %i | %i | %s | %i | %i | %i | %c \n", prompt_args, arg_21, arg_22, arg_23, arg_24, arg_25, arg_26, arg_27, arg_28);
+                printf("---------------------------------------------------\nft_printf :\n");
+                printf("%d\n", ft_printf(prompt_args, arg_21, arg_22, arg_23, arg_24, arg_25, arg_26, arg_27, arg_28));
+                printf("---------------------------------------------------\n\nprintf :\n");
+                printf("%d\n", printf(prompt_args, arg_21, arg_22, arg_23, arg_24, arg_25, arg_26, arg_27, arg_28));
+                printf("---------------------------------------------------\n\n");
+                printf("Check overflow protection:\n");
+                printf("ft_printf:\n");
+		printf("%d\n", ft_printf(prompt_of, arg_5));
+		printf("printf:\n");
+		printf("%d\n", printf(prompt_of, arg_5));
+		printf("ft_printf:\n");
+		printf("%d\n", ft_printf(prompt_of_2, arg_5));
+		printf("printf:\n");
+		printf("%d\n", printf(prompt_of_2, arg_5));
 		free(arg_18);
 		free(arg_19);
 		free(arg_20);

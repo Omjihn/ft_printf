@@ -57,71 +57,80 @@ char	*ft_itoa_base(unsigned int nb, char x)
 	return (res);
 }
 
-int	ft_print_xX(unsigned int nb, t_vars *vars)
+static int	ft_print_x_2(unsigned int nb, int ret_val, t_vars *vars)
 {
-	int		ret_val;
-	int		len;
-	int		i;
-	char	*str;
-	char sign;
-
-	str = ft_itoa_base(nb, vars->type);
-	len = ft_strlen(str);
+	vars->str = ft_itoa_base(nb, vars->type);
+	vars->len = ft_strlen(vars->str);
 	ret_val = 0;
-	sign = 0;
 	if (vars->is_ox && nb)
-		sign = 2;
-	i = 0;
-	if (vars->field_width == ' ' && len < vars->nb_point)
+		vars->sign = 2;
+	vars->i = 0;
+	if (vars->field_width == ' ' && vars->len < vars->nb_point)
 	{
-		while (i + vars->nb_point < vars->nb_field_width - sign)
+		while (vars->i + vars->nb_point < vars->nb_field_width - vars->sign)
 		{
-			i += write(1, " ", 1);
+			vars->i += write(1, " ", 1);
 			ret_val++;
 		}
 	}
 	else if (vars->field_width == ' ')
 	{
-		while (i + len < vars->nb_field_width - sign)
+		while (vars->i + vars->len < vars->nb_field_width - vars->sign)
 		{
-			i += write(1, " ", 1);
+			vars->i += write(1, " ", 1);
 			ret_val++;
 		}
 	}
+	vars->i = 0;
+	return (ret_val);
+}
+
+static int	ft_print_x_3(int ret_val, t_vars *vars)
+{
+	if (vars->field_width == '0')
+	{
+		while (vars->i + vars->len < vars->nb_field_width)
+		{
+			vars->i += write(1, "0", 1);
+			ret_val++;
+		}
+	}
+	else if (vars->is_point == '.')
+	{
+		vars->i = 0;
+		while (vars->i + vars->len < vars->nb_point)
+		{
+			vars->i += write(1, "0", 1);
+			ret_val++;
+		}
+	}
+	return (ret_val);
+}
+
+int	ft_print_x(unsigned int nb, t_vars *vars)
+{
+	int		ret_val;
+
+	ret_val = ft_print_x_2(nb, 0, vars);
 	if (vars->is_ox && nb)
 	{
 		if (vars->type == 'X')
 			ret_val += write(1, "0X", 2);
 		else
 			ret_val += write(1, "0x", 2);
+		vars->i += 2;
 	}
-	i = 0;
-	if (vars->field_width == '0')
-	{
-		while (i + len < vars->nb_field_width)
-		{
-			i += write(1, "0", 1);
-			ret_val++;
-		}
-	}
-	else if (vars->is_point == '.')
-	{
-		while (i + len < vars->nb_point)
-		{
-			i += write(1, "0", 1);
-			ret_val++;
-		}
-	}
-	ret_val += len;
-	i += ft_putstr(str);
+	ret_val = ft_print_x_3(ret_val, vars);
+	ret_val += vars->len;
+	vars->i += ft_putstr(vars->str);
 	if (vars->is_minus)
 	{
-		while (i < vars->nb_field_width_minus - sign)
+		while (vars->i < vars->nb_field_width_minus - vars->sign)
 		{
-			i += write(1, " ", 1);
+			vars->i += write(1, " ", 1);
 			ret_val++;
 		}
 	}
-	free(str);
+	free(vars->str);
 	return (ret_val);
 }

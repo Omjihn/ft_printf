@@ -92,9 +92,12 @@ int	ft_print_p(unsigned long adr, t_vars *vars)
 			ret_val++;
 		}
 	}
-	if (adr)
-		ret_val += ft_putstr("0x");
 	i = 0;
+	if (adr)
+	{
+		ret_val += ft_putstr("0x");
+		i += 2;
+	}
 	if (vars->field_width == '0')
 	{
 		while (adr && i + len - 2 < vars->nb_field_width)
@@ -110,6 +113,7 @@ int	ft_print_p(unsigned long adr, t_vars *vars)
 	}
 	else if (adr && vars->is_point == '.')
 	{
+		i = 0;
 		while (i + len - 2 < vars->nb_point)
 		{
 			i += write(1, "0", 1);

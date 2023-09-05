@@ -29,47 +29,51 @@ int	ft_print_c(char c, t_vars *vars)
 	return (i);
 }
 
+static int	ft_print_s_2(char *str, int ret_val, t_vars *vars)
+{
+	if (vars->field_width)
+	{
+		while (vars->i < vars->nb_field_width)
+		{
+			vars->i += write(1, " ", 1);
+			ret_val++;
+		}
+	}
+	vars->i = 0;
+	while (str && vars->i < vars->len)
+	{
+		vars->i += write(1, &str[vars->i], 1);
+		ret_val++;
+	}
+	if (vars->is_minus)
+	{
+		while (vars->i < vars->nb_field_width_minus)
+		{
+			vars->i += write(1, " ", 1);
+			ret_val++;
+		}
+	}
+	return (ret_val);
+}
+
 int	ft_print_s(char *str, t_vars *vars)
 {
-	int		i;
-	int		len;
 	int		ret_val;
 
 	if (!str)
-	{	
+	{
 		if ((vars->is_point && vars->nb_point >= 6) || !vars->is_point)
 			return (ft_print_s("(null)", vars));
 		else
 			return (ft_print_s("", vars));
 	}
 	ret_val = 0;
-	len = 0;
-	len = ft_strlen(str);
+	vars->len = 0;
+	vars->len = ft_strlen(str);
 	if (vars->nb_point)
-		if (vars->nb_point < len)
-			len = vars->nb_point;
-	i = len;
-	if (vars->field_width)
-	{
-		while (i < vars->nb_field_width)
-		{
-			i += write(1, " ", 1);
-			ret_val++;
-		}
-	}
-	i = 0;
-	while (str && i < len)
-	{
-		i += write(1, &str[i], 1);
-		ret_val++;
-	}
-	if (vars->is_minus)
-	{
-		while (i < vars->nb_field_width_minus)
-		{
-			i += write(1, " ", 1);
-			ret_val++;
-		}
-	}
+		if (vars->nb_point < vars->len)
+			vars->len = vars->nb_point;
+	vars->i = vars->len;
+	ret_val = ft_print_s_2(str, ret_val, vars);
 	return (ret_val);
 }

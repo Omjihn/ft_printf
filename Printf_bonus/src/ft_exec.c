@@ -6,7 +6,7 @@
 /*   By: gbricot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 10:52:48 by gbricot           #+#    #+#             */
-/*   Updated: 2023/09/04 09:45:26 by gbricot          ###   ########.fr       */
+/*   Updated: 2023/09/05 09:22:32 by gbricot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,12 @@ static char	ft_get_type(const char *str)
 
 static void	ft_reset_vars(t_vars *vars)
 {
+	vars->i = 0;
+	vars->len = 0;
 	vars->type = 0;
+	vars->sign = 0;
 	vars->is_ox = 0;
+	vars->str = NULL;
 	vars->is_plus = 0;
 	vars->is_space = 0;
 	vars->is_point = 0;
@@ -66,7 +70,7 @@ int	ft_exec_before(char type, const char *str, t_vars *vars, va_list args)
 			vars->is_ox = 1;
 			i++;
 		}
-		else if (ft_is_numeric(str[i]) || (type != 's' && str[i] == '.'))
+		else if (ft_is_numeric(str[i]) || str[i] == '*' || (type != 's' && str[i] == '.'))
 			i += ft_field_width(str + i, vars, args);
 		else if (type == 's' && str[i] == '.')
 			i += ft_str_limit(str + i, vars, args);
@@ -115,10 +119,10 @@ int	ft_wich_type(va_list args, t_vars *vars, const char *str)
 		return (ft_print_p(va_arg(args, unsigned long int), vars));		
 	else if (vars->type == 'd' || vars->type == 'i')
 		return(ft_print_di(va_arg(args, int), vars));
-	//else if (vars->type == 'u')
-		
+	else if (vars->type == 'u')
+		return (ft_print_u(va_arg(args, unsigned int), vars));
 	else if (vars->type == 'x' || vars->type == 'X')
-		return (ft_print_xX(va_arg(args, unsigned int), vars));		
+		return (ft_print_x(va_arg(args, unsigned int), vars));		
 	else if (vars->type == '%')
 		return (ft_print_percent(vars, str));
 	return (0);
@@ -132,10 +136,11 @@ int	ft_exec(t_vars *vars, va_list args, const char *str)
 	(void) args;
 	type = ft_get_type(str);
 	vars->type = type;
-	//printf("Type :%d\n", type);
 	if (!type)
 		return (1);
 	i = ft_exec_before(type, str, vars, args);
+	if(vars->is_error)
+		return(0);
 	if (vars->is_wrong_flag == 1)
 	{
 		vars->ret_val += write(1, "%", 1);
@@ -146,11 +151,6 @@ int	ft_exec(t_vars *vars, va_list args, const char *str)
 		vars->ret_val += i;
 		return (i - 1);
 	}
-	else if (vars->is_wrong_flag == 2)
-	{
-		
-	}
-	//printf("is_error %d\nis_ox %d\nis_plus %d\nis_space %d\nis_point %d\nfield_width %d\nnb_field_width %d\nnb_point %d\nret_val %d\nis_minus %d\nis_point %d\n", vars->is_error, vars->is_ox, vars->is_plus, vars->is_space, vars->is_point, vars->field_width, vars->nb_field_width, vars->nb_point, vars->ret_val, vars->is_minus, vars->is_point);
 	vars->ret_val += ft_wich_type(args, vars, str);
 	ft_reset_vars(vars);
 	return (i);

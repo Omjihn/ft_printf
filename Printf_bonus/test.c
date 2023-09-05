@@ -6,7 +6,7 @@
 /*   By: gbricot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 11:16:10 by gbricot           #+#    #+#             */
-/*   Updated: 2023/08/30 09:13:27 by gbricot          ###   ########.fr       */
+/*   Updated: 2023/09/05 10:42:21 by gbricot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 int	main(void)
 {
-	printf("%d\n", printf("%i\n", 12345));
-	printf("%d\n", printf("%10i\n", 12345));
-	printf("%d\n", printf("%10.10i\n", 12345));
-	printf("%d\n", printf("%5.10i\n", 12345));
-	printf("%d\n", printf("%10.5i\n", 12345));
-	printf("%d\n", printf("%10.7i\n", 12345));
+	printf("%d\n", printf("%021u\n", 42));
 	//printf("%d\n", printf("% 1d\n", 42));
 }
