@@ -35,7 +35,7 @@ void  ft_free(int fd[2][2], char *res_1, char *res_2)
 
 int	main(int ac, char **av)
 {
-        char *prompt_cs = "%15c | % 12s | %-10.2s | %-12.2147483648s | %02.21c | %s | %2.3s | % -00002s |\n";
+        char *prompt_cs = "%15c | % 12s | %-10.2s | %-12.248s | %02.21c | %s | %2.3s | % -00002s |\n";
 	char	arg_1 = 's';
 	char	*arg_2 = "Oulala";
 	char	*arg_3 = NULL;
